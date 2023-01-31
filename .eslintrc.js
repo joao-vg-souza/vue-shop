@@ -17,6 +17,7 @@ module.exports = {
         'no-multi-spaces': ['error'],
         'vue/no-multiple-template-root': 'off',
         'no-use-before-define': 'off',
-        'no-unused-vars': 'off'
+        'no-unused-vars': 'off',
+        'vue/multi-word-component-names': 'off'
     }
 }
