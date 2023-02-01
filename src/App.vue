@@ -1,7 +1,23 @@
 <template>
-    <nav><router-link to="/">Home</router-link></nav>
-    <router-view />
+    <NavBar :cart="cart" />
+    <router-view :cart="cart" />
 </template>
+
+<script>
+import NavBar from './components/NavBar.vue'
+export default {
+    components: { NavBar },
+    data() {
+        return { cart: [{ price: '22', name: 'ss' }] }
+    },
+    methods: {
+        addToCart(value) {
+            this.cart.push(value)
+            this.cartTotal += value.price
+        }
+    }
+}
+</script>
 
 <style lang="css">
 html,
