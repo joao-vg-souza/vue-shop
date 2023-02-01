@@ -14,12 +14,4 @@ export default {
 }
 </script>
 
-<style scoped lang="css">
-.warningCart {
-    background: red;
-}
-
-.successCart {
-    background: green;
-}
-</style>
+<style scoped lang="css"></style>

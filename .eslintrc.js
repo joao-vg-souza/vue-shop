@@ -18,6 +18,12 @@ module.exports = {
         'vue/no-multiple-template-root': 'off',
         'no-use-before-define': 'off',
         'no-unused-vars': 'off',
-        'vue/multi-word-component-names': 'off'
+        'vue/multi-word-component-names': 'off',
+        'prettier/prettier': [
+            'error',
+            {
+                endOfLine: 'auto'
+            }
+        ]
     }
 }
