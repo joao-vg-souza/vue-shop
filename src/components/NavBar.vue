@@ -7,10 +7,16 @@
                 :alt="cartPNG"
             />
             <span style="font-size: 16px; color: white" v-if="cart.length">
-                {{ cart.length }}
+                {{ cartQty }}
             </span>
         </button>
-        <CartDropdown v-if="showDropdown" :cart="cart" />
+        <transition name="dropDown">
+            <CartDropdown
+                @hideDropdown="showDropdown = $event"
+                v-if="showDropdown && cart.length"
+                :cart="cart"
+            />
+        </transition>
     </div>
 </template>
 
@@ -19,11 +25,8 @@ import Currency from '@/components/Currency'
 import CartDropdown from '@/components/CartDropdown.vue'
 export default {
     components: { Currency, CartDropdown },
-    props: ['cart'],
+    props: ['cart', 'cartTotal', 'cartQty'],
     computed: {
-        cartTotal() {
-            return this.cart.reduce((inc, item) => Number(item.price) + inc, 0)
-        },
         cartBtn() {
             return {
                 warningCart: this.cartTotal >= 100,
@@ -44,7 +47,17 @@ export default {
 .successCart {
     background: green;
 }
+.dropDown-enter-active,
+.dropDown-leave-active {
+    transition: all 0.5s ease-in-out;
+    transform: auto;
+}
 
+.dropDown-enter-from,
+.dropDown-leave-to {
+    opacity: 0;
+    transform: translateX(-100px);
+}
 .cart {
     max-width: 100%;
     max-height: 50px;

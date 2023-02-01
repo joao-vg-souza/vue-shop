@@ -1,7 +1,10 @@
 <template>
     <div class="product">
         <div class="addToCart">
-            <button @click="$emit('addToCart', product)" type="button">
+            <button
+                @click="this.$parent.$parent.$parent.$emit('addItem', product)"
+                type="button"
+            >
                 +
             </button>
         </div>
@@ -21,8 +24,7 @@ import Currency from '@/components/Currency'
 export default {
     components: { Currency },
     name: 'Product',
-    props: ['product', 'index'],
-    emits: ['addToCart']
+    props: ['product', 'index']
 }
 </script>
 

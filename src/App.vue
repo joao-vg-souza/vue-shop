@@ -1,6 +1,16 @@
 <template>
-    <NavBar :cart="cart" />
-    <router-view :cart="cart" />
+    <NavBar
+        :cart="cart"
+        :cartTotal="cartTotal"
+        @deleteItem="deleteItem"
+        :cartQty="cartQty"
+    />
+    <router-view
+        :products="products"
+        :cart="cart"
+        @addItem="addItem"
+        @deleteItem="deleteItem"
+    />
 </template>
 
 <script>
@@ -8,18 +18,58 @@ import NavBar from './components/NavBar.vue'
 export default {
     components: { NavBar },
     data() {
-        return { cart: [{ price: '22', name: 'ss' }] }
+        return { cart: [], products: [] }
     },
     methods: {
-        addToCart(value) {
-            this.cart.push(value)
-            this.cartTotal += value.price
+        addItem(product) {
+            let whichProduct
+            let existing = this.cart.filter((item, index) => {
+                if (item.product.id == Number(product.id)) {
+                    whichProduct = index
+                    return true
+                } else {
+                    return false
+                }
+            })
+
+            if (existing.length) this.cart[whichProduct].qty++
+            else this.cart.push({ product: product, qty: 1 })
+        },
+        deleteItem(idProd) {
+            if (this.cart[idProd].qty > 1) this.cart[idProd].qty--
+            else this.cart.splice(idProd, 1)
         }
+    },
+    computed: {
+        cartTotal() {
+            let sum = 0
+            for (let key = 0; key < this.cart.length; key++) {
+                sum = sum + this.cart[key].product.price * this.cart[key].qty
+            }
+            return sum
+        },
+        cartQty() {
+            let qty = 0
+            for (let key = 0; key < this.cart.length; key++) {
+                qty = qty + this.cart[key].qty
+            }
+
+            return qty
+        }
+    },
+    created() {
+        fetch('https://hplussport.com/api/products/order/price')
+            .then(res => res.json())
+            .then(data => {
+                this.products = data
+            })
     }
 }
 </script>
 
 <style lang="css">
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
 html,
 body,
 div,
@@ -107,6 +157,7 @@ video {
     font-size: 100%;
     font: inherit;
     vertical-align: baseline;
+    font-family: 'Lato', sans-serif;
 }
 /* HTML5 display-role reset for older browsers */
 article,
