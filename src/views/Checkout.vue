@@ -1,13 +1,12 @@
 <template>
     <div class="container">
         <div>
-            <h1 style="font-size: 25px; text-align: end" class="header">
-                Checkout
-            </h1>
+            <h1 class="header">Checkout</h1>
         </div>
         <div class="table">
             <table>
                 <tr>
+                    <th></th>
                     <th>Item</th>
                     <th>Quantity</th>
                     <th>Price</th>
@@ -15,6 +14,10 @@
                 </tr>
                 <template v-for="item in cart" :key="item.product.id">
                     <tr>
+                        <td>
+                            <button class="addBtn">+</button
+                            ><button class="deleteBtn">-</button>
+                        </td>
                         <td>{{ item.product.name }}</td>
                         <td>{{ item.qty }}</td>
 
@@ -55,12 +58,45 @@ table {
 }
 
 td {
-    height: 40px;
+    height: 50px;
     text-align: center;
     vertical-align: middle;
+    width: 50px;
 }
 
-.container * {
-    border: 1px solid black;
+tr:nth-child(2) {
+    border-top: 1px solid rgb(112, 112, 112);
+}
+
+tr:first-child {
+    height: 30px;
+}
+
+tr:not(:first-child) {
+    background: rgb(224, 224, 224);
+}
+.addBtn,
+.deleteBtn {
+    padding: 5px 12px;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.header {
+    font-size: 25px;
+    text-align: end;
+    margin-top: 20px;
+}
+
+.addBtn {
+    background: green;
+    color: white;
+}
+
+.deleteBtn {
+    color: green;
+    background: white;
 }
 </style>
