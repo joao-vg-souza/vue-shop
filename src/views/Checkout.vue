@@ -12,11 +12,20 @@
                     <th>Price</th>
                     <th>Sub-total</th>
                 </tr>
-                <template v-for="item in cart" :key="item.product.id">
+                <template v-for="(item, index) in cart" :key="item.product.id">
                     <tr>
                         <td>
-                            <button class="addBtn">+</button
-                            ><button class="deleteBtn">-</button>
+                            <button
+                                @click="$emit('addItem', item.product)"
+                                class="addBtn"
+                            >
+                                +</button
+                            ><button
+                                @click="$emit('deleteItem', index)"
+                                class="deleteBtn"
+                            >
+                                -
+                            </button>
                         </td>
                         <td>{{ item.product.name }}</td>
                         <td>{{ item.qty }}</td>
@@ -30,6 +39,9 @@
                     </tr>
                 </template>
             </table>
+            <div style="margin-top: 30px">
+                <h1 class="total">Total: <currency :price="cartTotal" /></h1>
+            </div>
         </div>
     </div>
 </template>
@@ -38,7 +50,7 @@
 import Currency from '@/components/Currency.vue'
 export default {
     components: { Currency },
-    props: ['cart']
+    props: ['cart', 'cartTotal']
 }
 </script>
 
@@ -47,6 +59,11 @@ export default {
     display: grid;
     grid-template-columns: 0.5fr 1fr 0.5fr;
     height: 100vh;
+}
+
+.total {
+    text-align: end;
+    font-size: 20px;
 }
 
 .table {
@@ -70,6 +87,10 @@ tr:nth-child(2) {
 
 tr:first-child {
     height: 30px;
+}
+
+tr:last-child {
+    border-radius: 50px;
 }
 
 tr:not(:first-child) {

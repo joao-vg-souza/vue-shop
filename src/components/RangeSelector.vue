@@ -26,7 +26,7 @@ export default {
     components: { Currency },
     props: ['products'],
     data() {
-        return { max: 50 }
+        return { max: 130 }
     },
     computed: {
         filteredProducts() {
@@ -37,10 +37,10 @@ export default {
         max() {
             this.$emit('filteredProducts', this.filteredProducts)
         }
-    },
-    beforeUpdate() {
-        this.$emit('filteredProducts', this.filteredProducts)
     }
+    // beforeUpdate() {
+    //     this.$emit('filteredProducts', this.filteredProducts)
+    // }
 }
 </script>
 
