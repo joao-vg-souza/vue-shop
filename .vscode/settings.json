@@ -1,9 +1,24 @@
 {
-    "eslint.validate": ["vue", "html", "typescript"],
+    "eslint.validate": [
+        "vue",
+        "html",
+        "typescript"
+    ],
     "editor.formatOnSave": true,
     "vetur.validation.template": true,
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true 
+        "source.fixAll.eslint": true
     },
-    "files.eol": "\n"
+    "files.eol": "\n",
+    "background.useDefault": false,
+    "background.customImages": [
+        "https://i.pinimg.com/originals/37/01/ab/3701ab4d685e7ccc686bef3714b80275.png"
+    ],
+    "background.styles": [
+        {
+            "opacity": "0.3",
+            "background-size": "300px auto"
+        }
+    ],
+    "background.useFront": false
 }
