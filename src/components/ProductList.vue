@@ -26,6 +26,9 @@ export default {
         return {
             filteredProducts: []
         }
+    },
+    created() {
+        this.filteredProducts = this.products
     }
 }
 </script>

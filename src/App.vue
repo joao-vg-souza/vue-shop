@@ -10,6 +10,7 @@
         :cart="cart"
         @addItem="addItem"
         @deleteItem="deleteItem"
+        :cartTotal="cartTotal"
     />
 </template>
 
@@ -22,6 +23,7 @@ export default {
     },
     methods: {
         addItem(product) {
+            console.log(product)
             let whichProduct
             let existing = this.cart.filter((item, index) => {
                 if (item.product.id == Number(product.id)) {
