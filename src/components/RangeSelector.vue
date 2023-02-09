@@ -4,9 +4,7 @@
             <h1 style="font-size: 18px">
                 Valor máximo (<Currency :price="max" />)
             </h1>
-            <h1 style="font-size: 16px">
-                Resultados: {{ filteredProducts.length }}
-            </h1>
+            <h1 style="font-size: 16px">Resultados: {{ listLength }}</h1>
         </div>
         <div>
             <input
@@ -24,20 +22,22 @@
 import Currency from '@/components/Currency.vue'
 export default {
     components: { Currency },
-    props: ['products'],
-    data() {
-        return { max: 130 }
-    },
+    props: ['products', 'listLength'],
     computed: {
         filteredProducts() {
             return this.products.filter(prod => Number(prod.price) < this.max)
         }
     },
+    data() {
+        return { max: 130 }
+    },
     watch: {
         max() {
             this.$emit('filteredProducts', this.filteredProducts)
+            this.$emit('max', this.max)
         }
     }
+
     // beforeUpdate() {
     //     this.$emit('filteredProducts', this.filteredProducts)
     // }
