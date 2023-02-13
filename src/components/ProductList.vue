@@ -3,15 +3,8 @@
         @filteredProducts="this.filteredProducts = $event"
         :listLength="this.filteredProducts.length"
         @max="this.max = $event"
+        :searchInput="searchInput"
     />
-    <div class="searchField">
-        <input
-            v-model="searchInput"
-            placeholder="Search for product"
-            class="searchInput"
-            type="text"
-        />
-    </div>
     <div class="productList">
         <transition-group name="products" appear>
             <template v-for="(prod, index) in filteredProducts" :key="prod.id">
@@ -29,28 +22,7 @@ export default {
     data() {
         return {
             filteredProducts: this.$store.getters.getProducts,
-            searchInput: '',
             max: 1000
-        }
-    },
-    watch: {
-        searchInput() {
-            this.filteredProducts = this.$store.getters.getProducts.filter(
-                p =>
-                    p.name
-                        .toLowerCase()
-                        .includes(this.searchInput.toLowerCase()) &&
-                    Number(p.price) <= this.max
-            )
-        },
-        max() {
-            this.filteredProducts = this.$store.getters.getProducts.filter(
-                p =>
-                    p.name
-                        .toLowerCase()
-                        .includes(this.searchInput.toLowerCase()) &&
-                    Number(p.price) <= this.max
-            )
         }
     }
 }
@@ -65,24 +37,6 @@ export default {
 .products-enter-active,
 .products-leave-active {
     transition: all 0.5s ease-in-out;
-}
-
-.searchField {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-}
-
-.searchInput {
-    width: 50%;
-    height: 25px;
-    border: none;
-    border-radius: 15px;
-    background: rgb(206, 223, 255);
-    outline: none;
-    text-indent: 2%;
-    font-size: 15px;
-    font-family: 'Lato', sans-serif;
 }
 
 .products-enter-from {

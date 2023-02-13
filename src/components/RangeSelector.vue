@@ -13,6 +13,14 @@
                 :max="mostExpensive"
             />
         </div>
+        <div class="searchField">
+            <input
+                v-model="searchInput"
+                placeholder="Search for product"
+                class="searchInput"
+                type="text"
+            />
+        </div>
     </div>
 </template>
 
@@ -25,7 +33,12 @@ export default {
     computed: {
         filteredProducts() {
             return this.$store.getters.getProducts.filter(
-                prod => Number(prod.price) <= this.max
+                prod =>
+                    Number(prod.price) <= this.max &&
+                    prod.name
+                        .toLowerCase()
+                        .includes(this.searchInput.toLowerCase()) &&
+                    Number(prod.price) <= this.max
             )
         },
         mostExpensive() {
@@ -41,21 +54,20 @@ export default {
         }
     },
     data() {
-        return { max: 0 }
+        return { max: 0, searchInput: '' }
     },
     watch: {
         max() {
             this.$emit('filteredProducts', this.filteredProducts)
             this.$emit('max', this.max)
+        },
+        searchInput() {
+            this.$emit('filteredProducts', this.filteredProducts)
         }
     },
     beforeUpdate() {
         this.$emit('filteredProducts', this.filteredProducts)
     }
-
-    // beforeUpdate() {
-    //     this.$emit('filteredProducts', this.filteredProducts)
-    // }
 }
 </script>
 
@@ -70,7 +82,22 @@ export default {
     box-shadow: 0 0 2px 0 #555;
     transition: background 0.3s ease-in-out;
 }
-
+.searchField {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.searchInput {
+    width: 100%;
+    height: 25px;
+    border: none;
+    border-radius: 15px;
+    background: rgb(206, 223, 255);
+    outline: none;
+    text-indent: 2%;
+    font-size: 15px;
+    font-family: 'Lato', sans-serif;
+}
 .range::-webkit-slider-runnable-track {
     -webkit-appearance: none;
     box-shadow: none;

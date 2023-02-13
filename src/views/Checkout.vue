@@ -88,7 +88,7 @@ export default {
 
 .finishButton {
     border: none;
-    background: rgb(255, 255, 92);
+    background: rgb(255, 255, 157);
     border-radius: 10px;
     padding: 8px;
     border: 2px solid rgb(214, 211, 0);
@@ -99,7 +99,7 @@ export default {
 
 .finishButton:hover {
     transition: background 0.3s ease-in-out;
-    background: rgb(240, 236, 0);
+    background: rgb(255, 251, 0);
 }
 
 .total {
