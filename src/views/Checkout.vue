@@ -12,16 +12,26 @@
                     <th>Price</th>
                     <th>Sub-total</th>
                 </tr>
-                <template v-for="(item, index) in cart" :key="item.product.id">
+                <template
+                    v-for="(item, index) in this.$store.getters.getCart"
+                    :key="item.product.id"
+                >
                     <tr>
                         <td>
                             <button
-                                @click="$emit('addItem', item.product)"
+                                @click="
+                                    this.$store.commit(
+                                        'addToCart',
+                                        item.product
+                                    )
+                                "
                                 class="addBtn"
                             >
                                 +</button
                             ><button
-                                @click="$emit('deleteItem', index)"
+                                @click="
+                                    this.$store.commit('removeFromCart', index)
+                                "
                                 class="deleteBtn"
                             >
                                 -
@@ -42,6 +52,11 @@
             <div style="margin-top: 30px">
                 <h1 class="total">Total: <currency :price="cartTotal" /></h1>
             </div>
+            <div class="finishDiv">
+                <router-link class="finishButton" to="/payselect"
+                    >Finish order</router-link
+                >
+            </div>
         </div>
     </div>
 </template>
@@ -50,7 +65,12 @@
 import Currency from '@/components/Currency.vue'
 export default {
     components: { Currency },
-    props: ['cart', 'cartTotal']
+    props: ['cartTotal'],
+    watch: {
+        cartTotal() {
+            if (this.cartTotal == 0) this.$router.push({ name: 'listProducts' })
+        }
+    }
 }
 </script>
 
@@ -59,6 +79,27 @@ export default {
     display: grid;
     grid-template-columns: 0.5fr 1fr 0.5fr;
     height: 100vh;
+}
+
+.finishDiv {
+    margin-top: 25px;
+    text-align: end;
+}
+
+.finishButton {
+    border: none;
+    background: rgb(255, 255, 92);
+    border-radius: 10px;
+    padding: 8px;
+    border: 2px solid rgb(214, 211, 0);
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.finishButton:hover {
+    transition: background 0.3s ease-in-out;
+    background: rgb(240, 236, 0);
 }
 
 .total {
@@ -96,8 +137,7 @@ tr:last-child {
 tr:not(:first-child) {
     background: rgb(224, 224, 224);
 }
-.addBtn,
-.deleteBtn {
+.addBtn {
     padding: 5px 12px;
     font-size: 20px;
     border: none;
@@ -105,6 +145,24 @@ tr:not(:first-child) {
     cursor: pointer;
 }
 
+.deleteBtn {
+    padding: 5px 14.5px;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.addBtn:hover {
+    transition: all 0.2s ease-in-out;
+    background: rgb(0, 192, 0);
+    transform: scale(1.05);
+}
+
+.deleteBtn:hover {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.05);
+}
 .header {
     font-size: 25px;
     text-align: end;

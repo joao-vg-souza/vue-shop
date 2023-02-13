@@ -2,7 +2,7 @@
     <div class="product">
         <div class="addToCart">
             <button
-                @click="this.$parent.$parent.$parent.$emit('addItem', product)"
+                @click="this.$store.commit('addToCart', product)"
                 type="button"
             >
                 +
@@ -44,13 +44,20 @@ export default {
 }
 .addToCart > button {
     padding: 5px 15px;
-    cursor: grab;
+    cursor: pointer;
     border: none;
     border-radius: 5px;
     background: green;
     color: white;
     font-size: 18px;
 }
+
+.addToCart > button:hover {
+    transition: all 0.2s ease-in-out;
+    background: rgb(0, 192, 0);
+    transform: scale(1.05);
+}
+
 .productInfos {
     display: flex;
     flex-direction: column;
@@ -74,9 +81,6 @@ export default {
 .productInfos > p {
     max-width: 30%;
     font-size: 18px;
-}
-.addToCart > button:active {
-    cursor: grabbing;
 }
 
 .product {

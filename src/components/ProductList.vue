@@ -1,7 +1,6 @@
 <template>
     <RangeSelector
         @filteredProducts="this.filteredProducts = $event"
-        :products="products"
         :listLength="this.filteredProducts.length"
         @max="this.max = $event"
     />
@@ -16,11 +15,7 @@
     <div class="productList">
         <transition-group name="products" appear>
             <template v-for="(prod, index) in filteredProducts" :key="prod.id">
-                <Product
-                    :index="index"
-                    :product="prod"
-                    @add-to-cart="addToCart"
-                />
+                <Product :index="index" :product="prod" />
             </template>
         </transition-group>
     </div>
@@ -31,31 +26,30 @@ import Product from '@/components/Product.vue'
 import RangeSelector from './RangeSelector.vue'
 export default {
     components: { Product, RangeSelector },
-    props: ['products'],
     data() {
         return {
-            filteredProducts: this.products,
+            filteredProducts: this.$store.getters.getProducts,
             searchInput: '',
-            max: 0
+            max: 1000
         }
     },
     watch: {
         searchInput() {
-            this.filteredProducts = this.products.filter(
+            this.filteredProducts = this.$store.getters.getProducts.filter(
                 p =>
                     p.name
                         .toLowerCase()
                         .includes(this.searchInput.toLowerCase()) &&
-                    Number(p.price) < this.max
+                    Number(p.price) <= this.max
             )
         },
         max() {
-            this.filteredProducts = this.products.filter(
+            this.filteredProducts = this.$store.getters.getProducts.filter(
                 p =>
                     p.name
                         .toLowerCase()
                         .includes(this.searchInput.toLowerCase()) &&
-                    Number(p.price) < this.max
+                    Number(p.price) <= this.max
             )
         }
     }

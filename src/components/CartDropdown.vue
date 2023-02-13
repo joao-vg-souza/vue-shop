@@ -1,6 +1,9 @@
 <template>
     <div class="dropDownCart">
-        <template v-for="(item, index) in cart" :key="index">
+        <template
+            v-for="(item, index) in this.$store.getters.getCart"
+            :key="index"
+        >
             <div class="prodCart">
                 <div>
                     <p class="qty">
@@ -14,7 +17,7 @@
                 <div>
                     <button
                         @click.stop="
-                            this.$parent.$parent.$emit('deleteItem', index)
+                            this.$store.commit('removeFromCart', index)
                         "
                         class="deleteButton"
                         type="button"
@@ -24,7 +27,7 @@
                             :src="
                                 require('@/assets/CartDropDownComponent/trashcan.png')
                             "
-                            :alt="trashcan"
+                            alt="trashcan"
                         />
                     </button>
                 </div>
@@ -45,8 +48,7 @@
 import Currency from './Currency.vue'
 
 export default {
-    components: { Currency },
-    props: ['cart']
+    components: { Currency }
 }
 </script>
 
@@ -61,8 +63,17 @@ export default {
     background: green;
     border-radius: 5px;
     color: white;
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
     text-decoration: none;
 }
+
+.checkoutBtn:hover {
+    transition: all 0.2s ease-in-out;
+    background: rgb(0, 192, 0);
+    transform: scale(1.05);
+}
+
 .checkoutDiv {
     display: flex;
     justify-content: center;
@@ -81,7 +92,6 @@ export default {
     grid-template-columns: 1.5fr 0.5fr 0.1fr;
     grid-template-rows: 1fr;
 }
-
 .prodCart > div {
     display: flex;
     justify-content: space-between;
@@ -103,6 +113,11 @@ export default {
     margin: 0 5px;
 }
 
+.deleteButton:hover {
+    transition: all 0.2s ease-in-out;
+    background: rgb(255, 70, 70);
+    transform: scale(1.05);
+}
 .dropDownCart {
     display: grid;
     position: fixed;
@@ -114,5 +129,7 @@ export default {
     border: 1px solid rgb(117, 117, 117);
     border-radius: 10px;
     grid-template-columns: 1fr;
+    max-height: 400px;
+    overflow: auto;
 }
 </style>

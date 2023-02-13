@@ -17,7 +17,7 @@
     "background.styles": [
         {
             "opacity": "0.3",
-            "background-size": "300px auto"
+            "background-size": "30% auto"
         }
     ],
     "background.useFront": false

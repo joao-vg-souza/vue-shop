@@ -1,9 +1,7 @@
 <template>
     <div class="filterProducts">
         <div>
-            <h1 style="font-size: 18px">
-                Valor máximo (<Currency :price="max" />)
-            </h1>
+            <h1 style="font: 400">Valor máximo (<Currency :price="max" />)</h1>
             <h1 style="font-size: 16px">Resultados: {{ listLength }}</h1>
         </div>
         <div>
@@ -11,8 +9,8 @@
                 class="range"
                 type="range"
                 v-model.number="max"
-                min="0"
-                max="130"
+                :min="0"
+                :max="mostExpensive"
             />
         </div>
     </div>
@@ -22,20 +20,37 @@
 import Currency from '@/components/Currency.vue'
 export default {
     components: { Currency },
-    props: ['products', 'listLength'],
+    props: ['listLength'],
+    emits: ['max', 'filteredProducts'],
     computed: {
         filteredProducts() {
-            return this.products.filter(prod => Number(prod.price) < this.max)
+            return this.$store.getters.getProducts.filter(
+                prod => Number(prod.price) <= this.max
+            )
+        },
+        mostExpensive() {
+            let mostExpensive = 0
+            this.$store.getters.getProducts.filter(p => {
+                if (Number(p.price) > mostExpensive) {
+                    mostExpensive = Number(p.price)
+
+                    this.max = Number(p.price)
+                }
+            })
+            return mostExpensive
         }
     },
     data() {
-        return { max: 130 }
+        return { max: 0 }
     },
     watch: {
         max() {
             this.$emit('filteredProducts', this.filteredProducts)
             this.$emit('max', this.max)
         }
+    },
+    beforeUpdate() {
+        this.$emit('filteredProducts', this.filteredProducts)
     }
 
     // beforeUpdate() {

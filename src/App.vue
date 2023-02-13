@@ -1,59 +1,27 @@
 <template>
-    <NavBar
-        :cart="cart"
-        :cartTotal="cartTotal"
-        @deleteItem="deleteItem"
-        :cartQty="cartQty"
-    />
-    <router-view
-        :products="products"
-        :cart="cart"
-        @addItem="addItem"
-        @deleteItem="deleteItem"
-        :cartTotal="cartTotal"
-    />
+    <NavBar :cartTotal="cartTotal" :cartQty="cartQty" />
+    <router-view :cartTotal="cartTotal" />
 </template>
 
 <script>
 import NavBar from './components/NavBar.vue'
 export default {
     components: { NavBar },
-    data() {
-        return { cart: [], products: [] }
-    },
-    methods: {
-        addItem(product) {
-            console.log(product)
-            let whichProduct
-            let existing = this.cart.filter((item, index) => {
-                if (item.product.id == Number(product.id)) {
-                    whichProduct = index
-                    return true
-                } else {
-                    return false
-                }
-            })
-
-            if (existing.length) this.cart[whichProduct].qty++
-            else this.cart.push({ product: product, qty: 1 })
-        },
-        deleteItem(idProd) {
-            if (this.cart[idProd].qty > 1) this.cart[idProd].qty--
-            else this.cart.splice(idProd, 1)
-        }
-    },
     computed: {
         cartTotal() {
             let sum = 0
-            for (let key = 0; key < this.cart.length; key++) {
-                sum = sum + this.cart[key].product.price * this.cart[key].qty
+            for (let key = 0; key < this.$store.getters.getCart.length; key++) {
+                sum =
+                    sum +
+                    this.$store.getters.getCart[key].product.price *
+                        this.$store.getters.getCart[key].qty
             }
             return sum
         },
         cartQty() {
             let qty = 0
-            for (let key = 0; key < this.cart.length; key++) {
-                qty = qty + this.cart[key].qty
+            for (let key = 0; key < this.$store.getters.getCart.length; key++) {
+                qty = qty + this.$store.getters.getCart[key].qty
             }
 
             return qty
@@ -63,14 +31,14 @@ export default {
         fetch('https://hplussport.com/api/products/order/price')
             .then(res => res.json())
             .then(data => {
-                this.products = data
+                this.$store.state.products = data
             })
     }
 }
 </script>
 
 <style lang="css">
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 html,
 body,
