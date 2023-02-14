@@ -1,6 +1,6 @@
 <template>
-    <NavBar :cartTotal="cartTotal" :cartQty="cartQty" />
-    <router-view :cartTotal="cartTotal" />
+    <NavBar :cartQty="cartQty" />
+    <router-view />
 </template>
 
 <script>
@@ -8,16 +8,6 @@ import NavBar from './components/NavBar.vue'
 export default {
     components: { NavBar },
     computed: {
-        cartTotal() {
-            let sum = 0
-            for (let key = 0; key < this.$store.getters.getCart.length; key++) {
-                sum =
-                    sum +
-                    this.$store.getters.getCart[key].product.price *
-                        this.$store.getters.getCart[key].qty
-            }
-            return sum
-        },
         cartQty() {
             let qty = 0
             for (let key = 0; key < this.$store.getters.getCart.length; key++) {

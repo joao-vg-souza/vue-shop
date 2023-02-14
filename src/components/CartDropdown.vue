@@ -65,6 +65,7 @@ export default {
     color: white;
     font-family: 'Lato', sans-serif;
     font-size: 15px;
+    transition: all 0.2s ease-in-out;
     text-decoration: none;
 }
 
@@ -110,6 +111,7 @@ export default {
     display: flex;
     align-items: center;
     background: red;
+    transition: all 0.2s ease-in-out;
     margin: 0 5px;
 }
 

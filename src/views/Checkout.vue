@@ -29,14 +29,13 @@
                             >
                                 +</button
                             ><button
-                                @click="
-                                    this.$store.commit('removeFromCart', index)
-                                "
+                                @click="removeFromCart(index)"
                                 class="deleteBtn"
                             >
                                 -
                             </button>
                         </td>
+
                         <td>{{ item.product.name }}</td>
                         <td>{{ item.qty }}</td>
 
@@ -50,7 +49,10 @@
                 </template>
             </table>
             <div style="margin-top: 30px">
-                <h1 class="total">Total: <currency :price="cartTotal" /></h1>
+                <h1 class="total">
+                    Total:
+                    <currency :price="this.$store.getters.getCartTotal" />
+                </h1>
             </div>
             <div class="finishDiv">
                 <router-link class="finishButton" to="/payselect"
@@ -65,10 +67,12 @@
 import Currency from '@/components/Currency.vue'
 export default {
     components: { Currency },
-    props: ['cartTotal'],
-    watch: {
-        cartTotal() {
-            if (this.cartTotal == 0) this.$router.push({ name: 'listProducts' })
+    methods: {
+        removeFromCart(index) {
+            this.$store.commit('removeFromCart', index)
+            if (this.$store.getters.getCartTotal === 0) {
+                this.$router.push({ name: 'listProducts' })
+            }
         }
     }
 }
@@ -94,6 +98,7 @@ export default {
     border: 2px solid rgb(214, 211, 0);
     cursor: pointer;
     text-decoration: none;
+    transition: background 0.3s ease-in-out;
     color: black;
 }
 
@@ -142,6 +147,7 @@ tr:not(:first-child) {
     font-size: 20px;
     border: none;
     border-radius: 5px;
+    transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
 
@@ -150,6 +156,7 @@ tr:not(:first-child) {
     font-size: 20px;
     border: none;
     border-radius: 5px;
+    transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
 

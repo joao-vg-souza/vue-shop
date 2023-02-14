@@ -3,7 +3,6 @@
         @filteredProducts="this.filteredProducts = $event"
         :listLength="this.filteredProducts.length"
         @max="this.max = $event"
-        :searchInput="searchInput"
     />
     <div class="productList">
         <transition-group name="products" appear>

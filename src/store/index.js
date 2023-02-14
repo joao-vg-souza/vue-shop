@@ -1,13 +1,20 @@
 import { createStore } from 'vuex'
 
 export default createStore({
-    state: { products: [], cart: [] },
+    state: { products: [], cart: [], cartTotal: 0 },
     getters: {
         getProducts(state) {
             return state.products
         },
         getCart(state) {
             return state.cart
+        },
+        getCartTotal(state) {
+            let sum = 0
+            for (let key = 0; key < state.cart.length; key++) {
+                sum = sum + state.cart[key].product.price * state.cart[key].qty
+            }
+            return sum
         }
     },
     mutations: {

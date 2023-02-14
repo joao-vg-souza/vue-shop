@@ -1,6 +1,9 @@
 <template>
+    {{ lastCartChange }}
     <div class="cart">
-        <h1 style="font-size: 17px"><Currency :price="cartTotal" /></h1>
+        <h1 style="font-size: 17px">
+            <Currency :price="this.$store.getters.getCartTotal" />
+        </h1>
         <button @click="showDropdown = !showDropdown">
             <img
                 :src="require('@/assets/ProductView/shoppingCart.png')"
@@ -23,11 +26,11 @@
 </template>
 
 <script>
-import Currency from '@/components/Currency'
+import Currency from '@/components/Currency.vue'
 import CartDropdown from '@/components/CartDropdown.vue'
 export default {
     components: { Currency, CartDropdown },
-    props: ['cartTotal', 'cartQty'],
+    props: ['cartQty'],
 
     data() {
         return { showDropdown: false }
@@ -67,6 +70,7 @@ export default {
     display: flex;
     align-items: center;
     background: green;
+    transition: all 0.2s ease-in-out;
     margin-left: 5px;
 }
 

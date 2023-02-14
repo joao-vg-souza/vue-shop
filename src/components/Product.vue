@@ -10,7 +10,7 @@
         </div>
         <div class="productInfos">
             <h1>{{ index + 1 }}) {{ product.name }}</h1>
-            <img :src="product.image" :alt="product.image_title" />
+            <img class="img" :src="product.image" :alt="product.image_title" />
             <p>{{ product.description }}</p>
             <h2 class="productPrice">
                 <Currency :price="product.price" />
@@ -34,14 +34,21 @@ export default {
     left: 25%;
     z-index: 10000000;
 }
-.productInfos > img {
-    min-width: 350px;
-    max-width: 20%;
+.img {
+    width: 30%;
     aspect-ratio: 3/2;
     object-fit: contain;
     mix-blend-mode: color-burn;
     margin: 20px 0;
+    transition: all 0.3s ease-out;
 }
+
+.img:hover {
+    transition: all 0.3s ease-in;
+    transform: scale(1.5) rotateX(360deg);
+    margin: 100px 0;
+}
+
 .addToCart > button {
     padding: 5px 15px;
     cursor: pointer;
@@ -49,6 +56,7 @@ export default {
     border-radius: 5px;
     background: green;
     color: white;
+    transition: all 0.2s ease-in-out;
     font-size: 18px;
 }
 
