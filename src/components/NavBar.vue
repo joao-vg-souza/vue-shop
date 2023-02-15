@@ -1,8 +1,23 @@
 <template>
-    {{ lastCartChange }}
     <div class="cart">
         <h1 style="font-size: 17px">
-            <Currency :price="this.$store.getters.getCartTotal" />
+            <Currency :price="value" />
+            <transition name="newValue">
+                <div
+                    :class="newValueStyles"
+                    class="newValue"
+                    v-if="showNewValue"
+                >
+                    {{ value > cartTotal ? '-' : '+'
+                    }}<Currency
+                        :price="
+                            value > cartTotal
+                                ? value - cartTotal
+                                : cartTotal - value
+                        "
+                    />
+                </div>
+            </transition>
         </h1>
         <button @click="showDropdown = !showDropdown">
             <img
@@ -13,7 +28,7 @@
                 style="font-size: 16px; color: white"
                 v-if="this.$store.getters.getCart.length"
             >
-                {{ cartQty }}
+                {{ this.$store.getters.getCartQty }}
             </span>
         </button>
         <transition name="dropDown">
@@ -30,10 +45,35 @@ import Currency from '@/components/Currency.vue'
 import CartDropdown from '@/components/CartDropdown.vue'
 export default {
     components: { Currency, CartDropdown },
-    props: ['cartQty'],
-
     data() {
-        return { showDropdown: false }
+        return {
+            showDropdown: false,
+            value: this.$store.getters.getCartTotal,
+            showNewValue: false,
+            newValueStyles: { subtractColor: false, plusColor: false }
+        }
+    },
+    computed: {
+        cartTotal() {
+            return this.$store.getters.getCartTotal
+        }
+    },
+    watch: {
+        async cartTotal() {
+            setTimeout(() => {
+                this.value = this.cartTotal
+                this.showNewValue = false
+                this.newValueStyles.subtractColor = false
+                this.newValueStyles.plusColor = false
+            }, 1000)
+
+            this.showNewValue = true
+            if (this.value > this.cartTotal) {
+                this.newValueStyles.subtractColor = true
+            } else {
+                this.newValueStyles.plusColor = true
+            }
+        }
     }
 }
 </script>
@@ -43,6 +83,30 @@ export default {
 .dropDown-leave-active {
     transition: all 0.5s ease-in-out;
     transform: auto;
+}
+
+.newValue-enter-active,
+.newValue-leave-active {
+    transition: all 0.2s ease-in;
+    transform: auto;
+}
+
+.newValue-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.newValue {
+    position: absolute;
+    margin-top: 5px;
+}
+
+.subtractColor {
+    color: red;
+}
+
+.plusColor {
+    color: green;
 }
 
 .dropDown-enter-from,

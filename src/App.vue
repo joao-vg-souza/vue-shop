@@ -1,5 +1,5 @@
 <template>
-    <NavBar :cartQty="cartQty" />
+    <NavBar />
     <router-view />
 </template>
 
@@ -7,16 +7,6 @@
 import NavBar from './components/NavBar.vue'
 export default {
     components: { NavBar },
-    computed: {
-        cartQty() {
-            let qty = 0
-            for (let key = 0; key < this.$store.getters.getCart.length; key++) {
-                qty = qty + this.$store.getters.getCart[key].qty
-            }
-
-            return qty
-        }
-    },
     created() {
         fetch('https://hplussport.com/api/products/order/price')
             .then(res => res.json())

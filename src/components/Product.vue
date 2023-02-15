@@ -45,7 +45,7 @@ export default {
 
 .img:hover {
     transition: all 0.3s ease-in;
-    transform: scale(1.5) rotateX(360deg);
+    transform: scale(1.5) rotate(360deg);
     margin: 100px 0;
 }
 

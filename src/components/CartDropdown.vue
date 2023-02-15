@@ -125,7 +125,7 @@ export default {
     position: fixed;
     position: fixed;
     right: 20px;
-    top: 50px;
+    top: 60px;
     min-width: 25%;
     background: white;
     border: 1px solid rgb(117, 117, 117);
