@@ -1,7 +1,13 @@
 import { createStore } from 'vuex'
 
 export default createStore({
-    state: { products: [], cart: [], cartTotal: 0, cartQty: 0 },
+    state: {
+        products: [],
+        cart: [],
+        cartTotal: 0,
+        cartQty: 0,
+        navBarStatus: false
+    },
     getters: {
         getProducts(state) {
             return state.products
@@ -23,6 +29,9 @@ export default createStore({
             }
 
             return qty
+        },
+        getNavStatus(state) {
+            return state.navBarStatus
         }
     },
     mutations: {
@@ -43,6 +52,9 @@ export default createStore({
         removeFromCart(state, idProd) {
             if (state.cart[idProd].qty > 1) state.cart[idProd].qty--
             else state.cart.splice(idProd, 1)
+        },
+        toggleNavBar(state, bool) {
+            state.navBarStatus = bool
         }
     },
     actions: {
@@ -51,6 +63,9 @@ export default createStore({
         },
         removeFromCart({ commit }, idProd) {
             commit('removeFromCart', idProd)
+        },
+        toggleNavBar({ commit }, bool) {
+            commit('toggleNavBar', bool)
         }
     },
     modules: {}

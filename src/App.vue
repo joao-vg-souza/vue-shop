@@ -1,5 +1,7 @@
 <template>
-    <NavBar />
+    <div v-if="this.$store.getters.getNavStatus">
+        <NavBar />
+    </div>
     <router-view />
 </template>
 
@@ -105,7 +107,6 @@ video {
     padding: 0;
     border: 0;
     font-size: 100%;
-    font: inherit;
     vertical-align: baseline;
     font-family: 'Lato', sans-serif;
 }

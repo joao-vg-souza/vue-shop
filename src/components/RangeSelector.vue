@@ -1,8 +1,12 @@
 <template>
     <div class="filterProducts">
         <div>
-            <h1 style="font: 400">Valor máximo (<Currency :price="max" />)</h1>
-            <h1 style="font-size: 16px">Resultados: {{ listLength }}</h1>
+            <h1 style="font-size: 18px">
+                Valor máximo (<Currency :price="max" />)
+            </h1>
+            <h1 style="font-size: 16px; font-weight: 400">
+                Resultados: {{ listLength }}
+            </h1>
         </div>
         <div>
             <input
@@ -97,6 +101,7 @@ export default {
     text-indent: 2%;
     font-size: 15px;
     font-family: 'Lato', sans-serif;
+    font-weight: 600;
 }
 .range::-webkit-slider-runnable-track {
     -webkit-appearance: none;

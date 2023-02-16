@@ -1,8 +1,7 @@
 <template>
     <div class="cart">
-        <h1 style="font-size: 17px">
-            <Currency :price="value" />
-            <transition name="newValue">
+        <div style="display: flex; font-size: 17px">
+            <transition name="newValue" appear>
                 <div
                     :class="newValueStyles"
                     class="newValue"
@@ -18,7 +17,10 @@
                     />
                 </div>
             </transition>
-        </h1>
+            <h1>
+                <Currency :price="value" />
+            </h1>
+        </div>
         <button @click="showDropdown = !showDropdown">
             <img
                 :src="require('@/assets/ProductView/shoppingCart.png')"
@@ -91,14 +93,19 @@ export default {
     transform: auto;
 }
 
+.newValue-enter-from {
+    opacity: 0;
+    transform: translateX(-10px);
+}
 .newValue-leave-to {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateX(10px);
 }
 
 .newValue {
-    position: absolute;
-    margin-top: 5px;
+    margin-right: 5px;
+    font-size: 17px;
+    font-weight: 700;
 }
 
 .subtractColor {
